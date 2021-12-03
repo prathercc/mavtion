@@ -6,7 +6,7 @@ import java.awt.Robot;
 import java.util.Random;
 
 /**
- * @author Aaron This class will handle all screen location gathering.
+ * @author Aaron - This class handles all screen location gathering.
  */
 public class LocationService {
 	
@@ -20,6 +20,9 @@ public class LocationService {
 		}
 	}
 	
+	/**
+	 * @return A random position from a given box
+	 */
 	public Point getPositionFromBox(Point one, Point two) {
 		Point p = new Point();
 		p.setLocation(new Random().ints((int) one.getX(), (int)two.getX()).findFirst().getAsInt(), 

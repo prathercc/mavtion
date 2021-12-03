@@ -7,7 +7,7 @@ import java.awt.event.InputEvent;
 import java.util.Random;
 
 /**
- * @author Aaron This class will handle all mouse related actions that the
+ * @author Aaron - This class handles all mouse related actions that the
  *         program needs.
  *
  */
@@ -40,18 +40,14 @@ public class MouseService {
 	}
 
 	/**
-	 * @param x
-	 * @param y
-	 * @see This function will set the mouse cursor position to the point specified.
+	 * This function will set the mouse cursor position to the point specified.
 	 */
 	public void putMouse(int x, int y) {
 		robot.mouseMove(x, y);
 	}
 
 	/**
-	 * @param x
-	 * @param y
-	 * @see This function will gracefully move the mouse cursor to the specified
+	 * This function will gracefully move the mouse cursor to the specified
 	 *      position
 	 */
 	public void moveMouse(int x, int y) {
@@ -59,7 +55,7 @@ public class MouseService {
 		int activeYCoord = (int) MouseInfo.getPointerInfo().getLocation().getY();
 		while (activeXCoord != x || activeYCoord != y) {
 			try {
-				Thread.sleep(new Random().ints(1, 5).findFirst().getAsInt());
+				Thread.sleep(new Random().ints(1, 4).findFirst().getAsInt());
 			} catch (Exception e) {
 			}
 			if (activeXCoord != x) {

@@ -24,11 +24,25 @@ public class MouseService {
 	}
 	
 	/**
+	 * Holds the left mouse button down
+	 */
+	public void holdLeftMouse() {
+		robot.mousePress(InputEvent.BUTTON1_MASK);
+	}
+	
+	/**
+	 * Releases the left mouse button
+	 */
+	public void releaseLeftMouse() {
+		robot.mouseRelease(InputEvent.BUTTON1_MASK);
+	}
+	
+	/**
 	 * Simulate a left mouse click
 	 */
 	public void sendLeftMouseClick() {
-		robot.mousePress(InputEvent.BUTTON1_MASK);
-		robot.mouseRelease(InputEvent.BUTTON1_MASK);
+		holdLeftMouse();
+		releaseLeftMouse();
 	}
 	
 	/**

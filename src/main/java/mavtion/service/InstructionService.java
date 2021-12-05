@@ -111,6 +111,14 @@ public class InstructionService {
 						updateTextArea("Releasing key: " + key);
 						ks.releaseKey(key);
 					}
+					else if(command.contains("HOLDLEFTMOUSE")) {
+						updateTextArea("Holding left-mouse button.");
+						ms.holdLeftMouse();
+					}
+					else if(command.contains("RELEASELEFTMOUSE")) {
+						updateTextArea("Releasing left-mouse button.");
+						ms.releaseLeftMouse();
+					}
 				}
 			}
 		}

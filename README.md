@@ -1,6 +1,7 @@
 
 
 
+
 ## Get Mavtion
 
 **Latest Build:** 12/2/2021
@@ -56,8 +57,12 @@ Scripts should look similar to the following code:
     RELEASEKEY:SPACE
     HOLDLEFTMOUSE
     RELEASELEFTMOUSE
-    AFTER(1000,5000, 5) //After a time between 1000 and 4000 milliseconds, loop 5x.
-    _A:WAIT:4000 // Instruction to be performed when the AFTER instruction runs.
+    AFTER[0]:(1000,5000, 5) //After a time between 1000 and 5000 milliseconds, loop 5x.
+    _A[0]:WAIT:4000 // Instructions to be performed when the AFTER instruction runs.
+    _A[0]:WAIT:5000
+    AFTER[1]:(1000,5000, 5)
+    _A[1]:WAIT:4000
+    _A[1]:PRESSKEY:1
 ### Instructions
  1. LOOP - Tells the program how many times the script will run before automatically stopping.
 > *LOOP is required for each script file.*
@@ -72,7 +77,7 @@ Scripts should look similar to the following code:
 9. RELEASEKEY - Releases a specified key.
 10. HOLDLEFTMOUSE - Holds the left mouse button down.
 11. RELEASELEFTMOUSE - Releases the left mouse button. 
-12. AFTER - After a time selected from a given interval (in milliseconds), perform instructions prefixed by _A: .
+12. AFTER[index] - After a time selected from a given interval (in milliseconds), perform instructions prefixed by _A[index]: .
 </p>
 
 ## Contributing

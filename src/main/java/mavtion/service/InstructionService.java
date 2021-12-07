@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import javax.swing.JCheckBox;
 import javax.swing.JTextArea;
 
+import mavtion.domain.AfterInstructionSet;
 import mavtion.domain.Instruction;
 import mavtion.domain.InstructionSet;
 
@@ -55,12 +56,34 @@ public class InstructionService {
 		}
 	}
 
+	private List<AfterInstructionSet> buildAfterInstructionSets(InstructionSet instructionSet) {
+		List<AfterInstructionSet> afterInstructionSetList = new ArrayList<AfterInstructionSet>();
+		for (Instruction instruction : instructionSet.getInstructions()) {
+			String instructionValue = instruction.getValue();
+			if (instructionValue.startsWith("AFTER")) {
+				List<Object> afterInstructions = new ArrayList<Object>();
+				int index = Integer.parseInt(instructionValue.split("]")[0].replaceAll("[^\\d.]", ""));
+				long rangeLow = Long.parseLong(instructionValue.split(":")[1].split(",")[0].replaceAll("[^\\d.]", ""));
+				long rangeHigh = Long.parseLong(instructionValue.split(",")[1].replaceAll("[^\\d.]", ""));
+				int loopQty = Integer.parseInt(instructionValue.split(",")[2].replaceAll("[^\\d.]", ""));
+				List<Instruction> _AInstructions = instructionSet.getInstructions().stream()
+						.filter(x -> x.getValue().contains("_A[" + index + "]")).collect(Collectors.toList());
+				_AInstructions.forEach(
+						x -> afterInstructions.add(new Instruction(x.getValue().replace("_A[" + index + "]:", ""))));
+				AfterInstructionSet afterInstructionSet = new AfterInstructionSet(afterInstructions, loopQty, rangeLow,
+						rangeHigh);
+				afterInstructionSetList.add(afterInstructionSet);
+			}
+		}
+		return afterInstructionSetList;
+	}
+
 	/**
 	 * Runs all instructions in the InstructionSet
 	 */
 	public void executeInstructions() {
-		long timeAtStart = System.currentTimeMillis();
 		if (instructionSet != null) {
+			List<AfterInstructionSet> afterInstructionSetList = buildAfterInstructionSets(instructionSet);
 			for (int i = 0; i < instructionSet.getQuantity(); i++) {
 				if (i % 20 == 0 && i != 0)
 					textArea.setText(new SimpleDateFormat("HH:mm:ss").format(new Date()) + ": Log cleared.");
@@ -68,29 +91,7 @@ public class InstructionService {
 					if (_stopJobBox.isSelected())
 						Thread.currentThread().stop();
 					String command = instruction.getValue();
-
-					if (command.contains("AFTER")) {
-						long afterTimeMillis = new Random()
-								.ints(Integer.parseInt(command.split(",")[0].replaceAll("[^\\d.]", "")),
-										Integer.parseInt(command.split(",")[1].replaceAll("[^\\d.]", "")))
-								.findFirst().getAsInt();
-						int loopQty = Integer.parseInt(command.split(",")[2].replaceAll("[^\\d.]", ""));
-						long currentTime = System.currentTimeMillis();
-						if (currentTime - timeAtStart >= afterTimeMillis) {
-							List<Object> tempInstructions = new ArrayList<Object>();
-							for (Instruction _i : instructionSet.getInstructions().stream()
-									.filter(x -> x.getValue().startsWith("_A:")).collect(Collectors.toList())) {
-								tempInstructions.add(new Instruction(_i.getValue().replace("_A:", "")));
-							}
-							InstructionService tempService = new InstructionService();
-							tempService.set_stopJobBox(_stopJobBox);
-							tempService.setInstructionSet(new InstructionSet(tempInstructions, loopQty));
-							tempService.setTextArea(textArea);
-							tempService.executeInstructions();
-							timeAtStart = System.currentTimeMillis();
-						}
-
-					} else if (command.startsWith("MOVEMOUSETO:BOXPOINT")) {
+					if (command.startsWith("MOVEMOUSETO:BOXPOINT")) {
 						Point p = parsePoint(command);
 						updateTextArea("Moving mouse to (" + (int) p.getX() + ", " + (int) p.getY() + ").");
 						ms.moveMouse((int) p.getX(), (int) p.getY());
@@ -141,6 +142,18 @@ public class InstructionService {
 					} else if (command.equalsIgnoreCase("RELEASELEFTMOUSE")) {
 						updateTextArea("Releasing left-mouse button.");
 						ms.releaseLeftMouse();
+					}
+				}
+				for (AfterInstructionSet afterInstructionSet : afterInstructionSetList) {
+					if (afterInstructionSet.shouldExecute()) {
+						InstructionService tempService = new InstructionService();
+						tempService.set_stopJobBox(_stopJobBox);
+						tempService.setInstructionSet(
+								new InstructionSet(new ArrayList<Object>(afterInstructionSet.getInstructions()),
+										afterInstructionSet.getQuantity()));
+						tempService.setTextArea(textArea);
+						tempService.executeInstructions();
+						afterInstructionSet.setLastExecution(System.currentTimeMillis());
 					}
 				}
 			}

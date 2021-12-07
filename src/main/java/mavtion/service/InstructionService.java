@@ -3,8 +3,12 @@ package mavtion.service;
 import java.awt.Point;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.stream.Collectors;
 
 import javax.swing.JCheckBox;
 import javax.swing.JTextArea;
@@ -55,21 +59,42 @@ public class InstructionService {
 	 * Runs all instructions in the InstructionSet
 	 */
 	public void executeInstructions() {
+		long timeAtStart = System.currentTimeMillis();
 		if (instructionSet != null) {
-			textArea.setText("");
 			for (int i = 0; i < instructionSet.getQuantity(); i++) {
-				if (i % 100 == 0)
+				if (i % 20 == 0 && i != 0)
 					textArea.setText(new SimpleDateFormat("HH:mm:ss").format(new Date()) + ": Log cleared.");
 				for (Instruction instruction : instructionSet.getInstructions()) {
 					if (_stopJobBox.isSelected())
 						Thread.currentThread().stop();
 					String command = instruction.getValue();
 
-					if (command.contains("MOVEMOUSETO:BOXPOINT")) {
+					if (command.contains("AFTER")) {
+						long afterTimeMillis = new Random()
+								.ints(Integer.parseInt(command.split(",")[0].replaceAll("[^\\d.]", "")),
+										Integer.parseInt(command.split(",")[1].replaceAll("[^\\d.]", "")))
+								.findFirst().getAsInt();
+						int loopQty = Integer.parseInt(command.split(",")[2].replaceAll("[^\\d.]", ""));
+						long currentTime = System.currentTimeMillis();
+						if (currentTime - timeAtStart >= afterTimeMillis) {
+							List<Object> tempInstructions = new ArrayList<Object>();
+							for (Instruction _i : instructionSet.getInstructions().stream()
+									.filter(x -> x.getValue().startsWith("_A:")).collect(Collectors.toList())) {
+								tempInstructions.add(new Instruction(_i.getValue().replace("_A:", "")));
+							}
+							InstructionService tempService = new InstructionService();
+							tempService.set_stopJobBox(_stopJobBox);
+							tempService.setInstructionSet(new InstructionSet(tempInstructions, loopQty));
+							tempService.setTextArea(textArea);
+							tempService.executeInstructions();
+							timeAtStart = System.currentTimeMillis();
+						}
+
+					} else if (command.startsWith("MOVEMOUSETO:BOXPOINT")) {
 						Point p = parsePoint(command);
 						updateTextArea("Moving mouse to (" + (int) p.getX() + ", " + (int) p.getY() + ").");
 						ms.moveMouse((int) p.getX(), (int) p.getY());
-					} else if (command.contains("MOVEMOUSETO:")) {
+					} else if (command.startsWith("MOVEMOUSETO:")) {
 						Point p = parsePoint(command);
 						updateTextArea("Moving mouse to (" + (int) p.getX() + ", " + (int) p.getY() + ").");
 						ms.moveMouse((int) p.getX(), (int) p.getY());
@@ -79,7 +104,7 @@ public class InstructionService {
 					} else if (command.equalsIgnoreCase("CLICKRIGHTMOUSE")) {
 						updateTextArea("Sending right mouse-click.");
 						ms.sendRightMouseClick();
-					} else if (command.contains("WAIT:BETWEEN")) {
+					} else if (command.startsWith("WAIT:BETWEEN")) {
 						try {
 							int time = new Random()
 									.ints(Integer.parseInt(command.split(",")[0].replaceAll("[^\\d.]", "")),
@@ -89,33 +114,31 @@ public class InstructionService {
 							Thread.sleep(time);
 						} catch (InterruptedException e) {
 						}
-					} else if (command.contains("WAIT:")) {
+					} else if (command.startsWith("WAIT:")) {
 						try {
 							int time = Integer.parseInt(command.split(":")[1].replaceAll("[^\\d.]", ""));
 							updateTextArea("Pausing for " + time + "ms.");
 							Thread.sleep(time);
 						} catch (InterruptedException e) {
 						}
-					} else if (command.contains("PRESSKEY:")) {
+					} else if (command.startsWith("PRESSKEY:")) {
 						String key = command.split(":")[1];
 						updateTextArea("Sending key-press with key: " + key);
 						ks.sendKeyPress(key);
 
-					} else if (command.contains("HOLDKEY:")) {
+					} else if (command.startsWith("HOLDKEY:")) {
 						String key = command.split(":")[1];
 						updateTextArea("Holding key: " + key);
 						ks.holdKey(key);
 
-					} else if (command.contains("RELEASEKEY:")) {
+					} else if (command.startsWith("RELEASEKEY:")) {
 						String key = command.split(":")[1];
 						updateTextArea("Releasing key: " + key);
 						ks.releaseKey(key);
-					}
-					else if(command.contains("HOLDLEFTMOUSE")) {
+					} else if (command.equalsIgnoreCase("HOLDLEFTMOUSE")) {
 						updateTextArea("Holding left-mouse button.");
 						ms.holdLeftMouse();
-					}
-					else if(command.contains("RELEASELEFTMOUSE")) {
+					} else if (command.equalsIgnoreCase("RELEASELEFTMOUSE")) {
 						updateTextArea("Releasing left-mouse button.");
 						ms.releaseLeftMouse();
 					}

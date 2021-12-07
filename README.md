@@ -1,5 +1,6 @@
 
 
+
 ## Get Mavtion
 
 **Latest Build:** 12/2/2021
@@ -50,6 +51,13 @@ Scripts should look similar to the following code:
     CLICKLEFTMOUSE
     WAIT:BETWEEN(4000,8000)
     WAIT:4000
+    PRESSKEY:1
+    HOLDKEY:SPACE
+    RELEASEKEY:SPACE
+    HOLDLEFTMOUSE
+    RELEASELEFTMOUSE
+    AFTER(1000,5000, 5) //After a time between 1000 and 4000 milliseconds, loop 5x.
+    _A:WAIT:4000 // Instruction to be performed when the AFTER instruction runs.
 ### Instructions
  1. LOOP - Tells the program how many times the script will run before automatically stopping.
 > *LOOP is required for each script file.*
@@ -59,6 +67,12 @@ Scripts should look similar to the following code:
 > *When selecting your box coordinates, measure from the top-left down to the bottom right.*
 5. CLICKRIGHTMOUSE - Simulates a right mouse click.
 6. CLICKLEFTMOUSE - Simulates a left mouse click.
+7. PRESSKEY - Simulates a key press.
+8. HOLDKEY - Holds a specified key down.
+9. RELEASEKEY - Releases a specified key.
+10. HOLDLEFTMOUSE - Holds the left mouse button down.
+11. RELEASELEFTMOUSE - Releases the left mouse button. 
+12. AFTER - After a time selected from a given interval (in milliseconds), perform instructions prefixed by _A: .
 </p>
 
 ## Contributing

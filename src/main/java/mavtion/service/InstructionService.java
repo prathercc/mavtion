@@ -142,6 +142,16 @@ public class InstructionService {
 					} else if (command.equalsIgnoreCase("RELEASELEFTMOUSE")) {
 						updateTextArea("Releasing left-mouse button.");
 						ms.releaseLeftMouse();
+					} else if (command.startsWith("DEBUG:")) {
+						updateTextArea(command.split(":")[1]);
+					} else if (command.startsWith("SETMOUSETO:BOXPOINT")) {
+						Point p = parsePoint(command);
+						updateTextArea("Setting mouse to (" + (int) p.getX() + ", " + (int) p.getY() + ").");
+						ms.putMouse((int) p.getX(), (int) p.getY());
+					} else if (command.startsWith("SETMOUSETO:")) {
+						Point p = parsePoint(command);
+						updateTextArea("Setting mouse to (" + (int) p.getX() + ", " + (int) p.getY() + ").");
+						ms.putMouse((int) p.getX(), (int) p.getY());
 					}
 				}
 				for (AfterInstructionSet afterInstructionSet : afterInstructionSetList) {
@@ -153,7 +163,7 @@ public class InstructionService {
 										afterInstructionSet.getQuantity()));
 						tempService.setTextArea(textArea);
 						tempService.executeInstructions();
-						afterInstructionSet.setLastExecution(System.currentTimeMillis());
+						afterInstructionSet.setNextExecution(afterInstructionSet.generateNextExecution());
 					}
 				}
 			}

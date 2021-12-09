@@ -2,6 +2,7 @@
 
 
 
+
 ## Get Mavtion
 
 **Latest Build:** 12/2/2021
@@ -48,6 +49,7 @@ Scripts should look similar to the following code:
     WAIT:BETWEEN(50,200)
     CLICKRIGHTMOUSE
     MOVEMOUSETO:BOXPOINT(174,292)->(237,294)
+    MOVEMOUSETO(174,294)
     WAIT:BETWEEN(50,200)
     CLICKLEFTMOUSE
     WAIT:BETWEEN(4000,8000)
@@ -57,6 +59,9 @@ Scripts should look similar to the following code:
     RELEASEKEY:SPACE
     HOLDLEFTMOUSE
     RELEASELEFTMOUSE
+    SETMOUSETO:BOXPOINT(100,200)->(400,500)
+    SETMOUSETO(100,500)
+    DEBUG:This is a test message!
     AFTER[0]:(1000,5000, 5) //After a time between 1000 and 5000 milliseconds, loop 5x.
     _A[0]:WAIT:4000 // Instructions to be performed when the AFTER instruction runs.
     _A[0]:WAIT:5000
@@ -70,14 +75,18 @@ Scripts should look similar to the following code:
  3. WAIT - Pauses the script for the specified amount of milliseconds.
  4. MOVEMOUSETO:BOXPOINT - Moves the mouse to a random position within a given box. 
 > *When selecting your box coordinates, measure from the top-left down to the bottom right.*
-5. CLICKRIGHTMOUSE - Simulates a right mouse click.
-6. CLICKLEFTMOUSE - Simulates a left mouse click.
-7. PRESSKEY - Simulates a key press.
-8. HOLDKEY - Holds a specified key down.
-9. RELEASEKEY - Releases a specified key.
-10. HOLDLEFTMOUSE - Holds the left mouse button down.
-11. RELEASELEFTMOUSE - Releases the left mouse button. 
-12. AFTER[index] - After a time selected from a given interval (in milliseconds), perform instructions prefixed by _A[index]: .
+5. MOVEMOUSETO - Moves the mouse to the given position.
+6. SETMOUSETO:BOXPOINT - Sets the position of the mouse to a random position within a given box.
+7. SETMOUSETO - Sets the position of the mouse to the given position.
+8. CLICKRIGHTMOUSE - Simulates a right mouse click.
+9. CLICKLEFTMOUSE - Simulates a left mouse click.
+10. PRESSKEY - Simulates a key press.
+11. HOLDKEY - Holds a specified key down.
+12. RELEASEKEY - Releases a specified key.
+13. HOLDLEFTMOUSE - Holds the left mouse button down.
+14. RELEASELEFTMOUSE - Releases the left mouse button. 
+15. AFTER[index] - After a time selected from a given interval (in milliseconds), perform instructions prefixed by _A[index]: .
+16. DEBUG - Debugs a message in the console area.
 </p>
 
 ## Contributing

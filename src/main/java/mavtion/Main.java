@@ -109,9 +109,15 @@ public class Main extends JFrame {
 					Thread thread = new Thread(new Runnable() {
 			            @Override
 			            public void run() {
-			            	instructionService.executeInstructions();
-			            	startButton.setText("Start");
-			            	_stopJobBox.setSelected(true);
+			            	try {
+				            	instructionService.executeInstructions();
+				            	startButton.setText("Start");
+				            	_stopJobBox.setSelected(true);
+			            	}
+			            	catch(Exception e) {
+			            		JOptionPane.showMessageDialog(getParent(), "Error executing script!\nPlease review script and try again.", "Error",
+										JOptionPane.WARNING_MESSAGE);
+			            	}
 			            }
 			        });  
 					thread.start();

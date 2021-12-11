@@ -14,7 +14,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
-import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
 
 import mavtion.domain.InstructionSet;
 import mavtion.service.FileService;
@@ -32,7 +32,6 @@ import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
-import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.event.ActionEvent;
@@ -54,7 +53,7 @@ public class Main extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FlatLightLaf.setup();
+					FlatDarkLaf.setup();
 					Main frame = new Main();
 					frame.setVisible(true);
 					Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();

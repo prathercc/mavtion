@@ -20,6 +20,7 @@ import mavtion.domain.InstructionSet;
 import mavtion.service.FileService;
 import mavtion.service.InstructionService;
 
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -55,6 +56,7 @@ public class Main extends JFrame {
 				try {
 					FlatDarkLaf.setup();
 					Main frame = new Main();
+					frame.setIconImage(ImageIO.read(Main.class.getResourceAsStream("/logo.png")));
 					frame.setVisible(true);
 					Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 					frame.setLocation(dim.width / 2 - frame.getSize().width / 2,

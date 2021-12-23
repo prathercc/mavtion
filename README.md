@@ -5,7 +5,7 @@
 
 ## Get Mavtion
 
-**Latest Build:** 12/16/2021
+**Latest Build:** 12/23/2021
 <p>
 <a href="https://github.com/prathercc/mavtion/raw/main/Mavtion.jar"><img src="https://img.shields.io/badge/Mavtion.jar-Download-blue.svg?style=plastic&logo=java"></a>
 <a href="https://github.com/prathercc/mavtion/raw/main/Sample%20Script.mvsf"><img src="https://img.shields.io/badge/Sample Script.mvsf-Download-red.svg?style=plastic"></a>

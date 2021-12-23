@@ -126,16 +126,20 @@ public class InstructionService {
 						String key = command.split(":")[1];
 						updateTextArea("Sending key-press with key: " + key);
 						ks.sendKeyPress(key);
-
 					} else if (command.startsWith("HOLDKEY:")) {
 						String key = command.split(":")[1];
 						updateTextArea("Holding key: " + key);
 						ks.holdKey(key);
-
 					} else if (command.startsWith("RELEASEKEY:")) {
 						String key = command.split(":")[1];
 						updateTextArea("Releasing key: " + key);
 						ks.releaseKey(key);
+					} else if (command.startsWith("TYPETEXT:")) {
+						String text = command.split(":")[1];
+						updateTextArea("Typing text: " + text);
+						for(int textIndex = 0; textIndex < text.length(); textIndex++) {
+							ks.sendKeyPress(Character.toString(text.charAt(textIndex)));
+						}
 					} else if (command.equalsIgnoreCase("HOLDLEFTMOUSE")) {
 						updateTextArea("Holding left-mouse button.");
 						ms.holdLeftMouse();

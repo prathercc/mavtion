@@ -61,6 +61,7 @@ Scripts should look similar to the following code:
     RELEASELEFTMOUSE
     SETMOUSETO:BOXPOINT(100,200)->(400,500)
     SETMOUSETO(100,500)
+    TYPETEXT:testing123
     DEBUG:This is a test message!
     AFTER[0]:(1000,5000, 5) //After a time between 1000 and 5000 milliseconds, loop 5x.
     _A[0]:WAIT:4000 // Instructions to be performed when the AFTER instruction runs.
@@ -87,6 +88,7 @@ Scripts should look similar to the following code:
 14. RELEASELEFTMOUSE - Releases the left mouse button. 
 15. AFTER[index] - After a time selected from a given interval (in milliseconds), perform instructions prefixed by _A[index]: .
 16. DEBUG - Debugs a message in the console area.
+17. TYPETEXT - Types an array of characters
 </p>
 
 ## Contributing

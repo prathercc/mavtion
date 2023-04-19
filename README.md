@@ -1,26 +1,17 @@
+#  <img width="45px" src="https://github.com/prathercc/mavtion/raw/main/src/main/resources/logo.png"> Mavtion
 
+ **Mavtion** is scripting software that reads from Mavtion Script Files (.mvsf) to perform automated tasks.
 
-
-
-
-## Get Mavtion
-
-**Latest Build:** 12/23/2021
-<p>
+<p align="center">
 <a href="https://github.com/prathercc/mavtion/raw/main/Mavtion.jar"><img src="https://img.shields.io/badge/Mavtion.jar-Download-blue.svg?style=plastic&logo=java"></a>
 <a href="https://github.com/prathercc/mavtion/raw/main/Sample%20Script.mvsf"><img src="https://img.shields.io/badge/Sample Script.mvsf-Download-red.svg?style=plastic"></a>
 </p>
-
-#  Mavtion
-
- **Mavtion** is a [Java](https://java.com/en/)  written script software that reads from Mavtion Script Files (.mvsf) to perform automated tasks.
 <p align="center">
 <img src="https://raw.githubusercontent.com/prathercc/mavtion/main/screenshots/1.png">
 </p>
 
 
 ## Load Scripts
-Locate a .mvsf file and load the script into memory.
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/prathercc/mavtion/main/screenshots/2.png">
@@ -32,7 +23,6 @@ Locate a .mvsf file and load the script into memory.
 </p>
 
 ## Toggle Script Start/Stop
-Use the assigned hot-key or manually click the Start and Stop button.
 <p align="center">
 <img src="https://raw.githubusercontent.com/prathercc/mavtion/main/screenshots/4.png">
 </p>

@@ -1,6 +1,6 @@
 #  <img width="45px" src="https://github.com/prathercc/mavtion/raw/main/src/main/resources/logo.png"> Mavtion
 
- **Mavtion** is scripting software that reads from Mavtion Script Files (.mvsf) to perform automated tasks.
+ **Mavtion** is script software that reads from Mavtion Script Files (.mvsf) to perform automated tasks.
 
 <p align="center">
 <a href="https://github.com/prathercc/mavtion/raw/main/mavtion.jar"><img src="https://img.shields.io/badge/Mavtion.jar-Download-blue.svg?style=plastic&logo=java"></a>
